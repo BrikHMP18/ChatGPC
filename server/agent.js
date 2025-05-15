@@ -40,7 +40,7 @@ const llm = new ChatOpenAI({
 // Memoria del agente
 const checkpointer = new MemorySaver();
 
-const agent = createReactAgent({
+export const agent = createReactAgent({
   llm,
   tools: [retrievalTool],
   checkpointer,
@@ -50,18 +50,4 @@ Puedes hacerlo al inicio o al final de la respuesta con: "Fuente: <título del d
 Si no encuentras la información, dilo con claridad.`,
 });
 
-// Test del agente
-console.log('Q1: ¿Cuál es la función de la Dirección de Investigación en Salud del IETSI y de dónde obtuviste esa información?');
-const result = await agent.invoke(
-  {
-    messages: [
-      {
-        role: 'user',
-        content: '¿Cuál es la función de la Dirección de Investigación en Salud del IETSI y de dónde obtuviste esa información?',
-      },
-    ],
-  },
-  { configurable: { thread_id: '1' } }
-);
 
-console.log(result.messages.at(-1)?.content);
